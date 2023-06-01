@@ -1,10 +1,5 @@
-import path from "path";
-import url from "url";
 import express from "express";
 import { engine } from "express-handlebars";
-
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Setup
 const app = express();
