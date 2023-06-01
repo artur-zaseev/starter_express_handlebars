@@ -1,6 +1,6 @@
+import path from "path";
 import express from "express";
 import { engine } from "express-handlebars";
-import path from "path";
 
 // Setup
 const app = express();
