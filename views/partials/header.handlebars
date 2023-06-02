@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-start align-items-center">
+      <a class="navbar-brand" href="/">App</a>
+      {{#if user}}
+        <a class="nav-link" href="/profile">Profile</a>
+        <a class="nav-link" href="/auth/logout">Logout</a>
+      {{/if}}
+    </div>
+
+    <div class="d-flex justify-content-start align-items-center">
+      {{#if user}}
+        <a class="nav-link">{{user.displayName}}</a>
+      {{else}}
+        <a class="nav-link" href="/auth/google">Login</a>
+      {{/if}}
+    </div>
+  </div>
+</nav>
