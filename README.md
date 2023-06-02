@@ -2,6 +2,7 @@
 - Express
 - Handlebars
 - Bootstrap 5
+- Passport.js
 
 ## Установка:
 - Устанавливаем зависимости `npm install`
