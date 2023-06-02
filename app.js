@@ -43,4 +43,4 @@ app.use(passport.session());
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
 
-app.listen(3000, () => console.log("Server start jn port 3000"));
+app.listen(3000, () => console.log("Server start on port 3000"));
