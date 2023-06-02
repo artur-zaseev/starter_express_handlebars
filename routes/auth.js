@@ -5,14 +5,14 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 passport.serializeUser(function (user, done) {
   done(null, user);
 });
+
 passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
-if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET)
-  throw new Error(
-    "Please provide the GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET env variables in the .env file in the root of the project!"
-  );
+if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+  throw new Error("Please provide env variables!");
+}
 
 passport.use(
   new GoogleStrategy(
@@ -41,17 +41,12 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/profile");
-  }
+  (req, res) => res.redirect("/profile")
 );
 
 router.get("/logout", function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
+  req.logout((err) => {
+    if (err) return next(err);
     res.redirect("/");
   });
 });
