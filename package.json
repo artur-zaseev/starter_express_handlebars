@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "ui": "browser-sync start --proxy localhost:3000 --files=**/*.handlebars --ignore=node_modules --no-ui --no-inject-changes"
+    "ui": "browser-sync start --proxy localhost:3000 --files=**/*.handlebars --ignore=node_modules --no-ui --no-notify --no-inject-changes"
   },
   "keywords": [],
   "author": "",
