@@ -1,4 +1,5 @@
 import path from "path";
+import url from "url";
 import "dotenv/config";
 import express from "express";
 import { engine } from "express-handlebars";
@@ -7,10 +8,13 @@ import session from "express-session";
 import createSQLiteSessionStore from "connect-sqlite3";
 import passport from "passport";
 
-import { __dirname } from "./utils/utils.js";
+import { db } from "./database/db.js";
 
 import indexRouter from "./routes/index.js";
 import authRouter from "./routes/auth.js";
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.engine("handlebars", engine());
@@ -39,6 +43,11 @@ app.use(passport.session());
 // Routes
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
+
+app.get("/api/users", async (req, res) => {
+  const result = await db.get("SELECT * FROM users");
+  return res.status(200).json(result);
+});
 
 app.listen(3000, () => {
   console.log("Server start on port 3000");

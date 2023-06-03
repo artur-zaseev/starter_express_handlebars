@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "nodemon app.js --ignore '/**/*.db'",
     "start": "node app.js",
     "ui": "browser-sync start --proxy localhost:3000 --files=**/*.handlebars --ignore=node_modules --no-ui --no-notify --no-inject-changes"
   },
@@ -24,6 +24,8 @@
     "express-handlebars": "^7.0.7",
     "express-session": "^1.17.3",
     "passport": "^0.6.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "sqlite": "^4.2.1",
+    "sqlite3": "^5.1.6"
   }
 }
