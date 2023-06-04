@@ -1,5 +1,4 @@
 import path from "path";
-import url from "url";
 import "dotenv/config";
 import express from "express";
 import { engine } from "express-handlebars";
@@ -13,20 +12,17 @@ import { open } from "sqlite";
 import indexRouter from "./routes/index.js";
 import authRouter from "./routes/auth.js";
 
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 export let db;
+
+const SQLiteStore = createSQLiteSessionStore(session);
+const sessionStore = new SQLiteStore({ db: "sessions.db" });
 
 const app = express();
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
-const SQLiteStore = createSQLiteSessionStore(session);
-const sessionStore = new SQLiteStore({ db: "sessions.db" });
-
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(process.cwd(), "public")));
 app.use(cookieParser());
 app.use(
   session({
