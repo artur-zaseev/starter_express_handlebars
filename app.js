@@ -7,14 +7,16 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import createSQLiteSessionStore from "connect-sqlite3";
 import passport from "passport";
-
-import { db } from "./database/db.js";
+import sqlite3 from "sqlite3";
+import { open } from "sqlite";
 
 import indexRouter from "./routes/index.js";
 import authRouter from "./routes/auth.js";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+export let db;
 
 const app = express();
 app.engine("handlebars", engine());
@@ -44,11 +46,11 @@ app.use(passport.session());
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
 
-app.get("/api/users", async (req, res) => {
-  const result = await db.get("SELECT * FROM users");
-  return res.status(200).json(result);
-});
+app.listen(3000, async () => {
+  db = await open({
+    filename: "./database/database.db",
+    driver: sqlite3.Database,
+  });
 
-app.listen(3000, () => {
   console.log("Server start on port 3000");
 });

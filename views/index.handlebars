@@ -2,4 +2,14 @@
   <h1 class="text-center my-4">
     Hello from express
   </h1>
+
+  <h2>Tasks:</h2>
+
+  {{#each tasks}}
+    <li>
+      <a class="link-primary" href="/{{this.id}}">
+        {{this.title}}
+      </a>
+    </li>
+  {{/each}}
 </main>

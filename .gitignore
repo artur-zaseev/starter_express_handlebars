@@ -2,7 +2,7 @@
 .idea
 .vscode
 
-sessions.db
+*.db
 
 # Logs
 logs
@@ -133,5 +133,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-/database/db.sqlite3

@@ -1,9 +1,13 @@
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
+import { db } from "../app.js";
 
-sqlite3.verbose();
+export const getAllTasks = async () => {
+  return await db.all("SELECT * FROM tasks");
+};
 
-export const db = await open({
-  filename: "./database/db.sqlite3",
-  driver: sqlite3.Database,
-});
+export const getTaskByID = async (id) => {
+  return await db.get("SELECT * FROM tasks WHERE id = ?", id);
+};
+
+export const addTask = async (text) => {
+  return await db.run("INSERT INTO tasks (title) VALUES (?)", text);
+};

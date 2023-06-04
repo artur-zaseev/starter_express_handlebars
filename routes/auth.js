@@ -29,10 +29,6 @@ passport.use(
 
 const router = express.Router();
 
-router.get("/login", function (req, res, next) {
-  res.render("login");
-});
-
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile email"] })
@@ -41,8 +37,14 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
-  (req, res) => res.redirect("/profile")
+  (req, res) => res.redirect("/auth/profile")
 );
+
+router.get("/profile", (req, res) => {
+  res.render("profile", {
+    user: req.user,
+  });
+});
 
 router.get("/logout", function (req, res, next) {
   req.logout((err) => {
