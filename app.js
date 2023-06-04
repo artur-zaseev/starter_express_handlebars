@@ -1,52 +1,52 @@
-import path from "path";
-import "dotenv/config";
-import express from "express";
-import { engine } from "express-handlebars";
-import cookieParser from "cookie-parser";
-import session from "express-session";
-import createSQLiteSessionStore from "connect-sqlite3";
-import passport from "passport";
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
+import path from 'path';
+import 'dotenv/config';
+import express from 'express';
+import {engine} from 'express-handlebars';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import createSQLiteSessionStore from 'connect-sqlite3';
+import passport from 'passport';
+import sqlite3 from 'sqlite3';
+import {open} from 'sqlite';
 
-import indexRouter from "./routes/index.js";
-import authRouter from "./routes/auth.js";
+import indexRouter from './routes/index.js';
+import authRouter from './routes/auth.js';
 
 export let db;
 
 const SQLiteStore = createSQLiteSessionStore(session);
-const sessionStore = new SQLiteStore({ db: "sessions.db" });
+const sessionStore = new SQLiteStore({db: 'sessions.db'});
 
 const app = express();
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
-app.set("views", "./views");
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
 
-app.use(express.static(path.join(process.cwd(), "public")));
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { httpOnly: true, secure: false, maxAge: 30 * 24 * 60 * 60 * 1000 }, // One month
+    cookie: {httpOnly: true, secure: false, maxAge: 30 * 24 * 60 * 60 * 1000}, // One month
     store: sessionStore,
-  })
+  }),
 );
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/", indexRouter);
-app.use("/auth", authRouter);
+app.use('/', indexRouter);
+app.use('/auth', authRouter);
 
 app.listen(3000, async () => {
   db = await open({
-    filename: "./database/database.db",
+    filename: './database/database.db',
     driver: sqlite3.Database,
   });
 
-  console.log("Server start on port 3000");
+  console.log('Server start on port 3000');
 });
